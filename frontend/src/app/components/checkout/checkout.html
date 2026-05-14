@@ -1,0 +1,70 @@
+<div class="page">
+
+  <div *ngIf="ordered" class="success">
+    <h1>🎉 Order Placed!</h1>
+    <p>Thank you, {{ form.name }}! Your order is on its way.</p>
+    <p class="redirect">Redirecting you back to the store...</p>
+  </div>
+
+  <div *ngIf="!ordered">
+    <h1>Checkout</h1>
+
+    <div *ngIf="items.length === 0" class="empty">
+      <p>Your cart is empty.</p>
+      <a routerLink="/products" class="btn-back">Go Shopping</a>
+    </div>
+
+    <div *ngIf="items.length > 0" class="checkout-layout">
+
+      <!-- Form -->
+      <div class="checkout-form">
+        <h2>Delivery Details</h2>
+
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" [(ngModel)]="form.name" />
+
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com" [(ngModel)]="form.email" />
+
+        <label>Street Address</label>
+        <input type="text" placeholder="123 Main Street" [(ngModel)]="form.address" />
+
+        <div class="row">
+          <div>
+            <label>City</label>
+            <input type="text" placeholder="New York" [(ngModel)]="form.city" />
+          </div>
+          <div>
+            <label>ZIP Code</label>
+            <input type="text" placeholder="10001" [(ngModel)]="form.zip" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="order-item" *ngFor="let item of items">
+          <span>{{ item.product.name }} x{{ item.quantity }}</span>
+          <span>${{ (item.product.price * item.quantity).toFixed(2) }}</span>
+        </div>
+        <div class="order-total">
+          <span>Total</span>
+          <span>${{ total.toFixed(2) }}</span>
+        </div>
+
+        <div class="actions">
+          <a routerLink="/cart" class="btn-back">Back to Cart</a>
+          <button
+            (click)="placeOrder()"
+            class="btn-order"
+            [disabled]="!isFormValid()">
+            Place Order
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

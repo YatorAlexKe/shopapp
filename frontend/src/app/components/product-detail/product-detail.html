@@ -1,0 +1,16 @@
+<div class="page">
+  <a routerLink="/products" class="back-link">← Back to Products</a>
+
+  <div class="detail-card" *ngIf="product">
+    <img [src]="product.image" [alt]="product.name" />
+    <div class="detail-info">
+      <p class="category">{{ product.category }}</p>
+      <h1>{{ product.name }}</h1>
+      <p class="description">{{ product.description }}</p>
+      <p class="price">${{ product.price }}</p>
+      <button (click)="addToCart()" class="btn-cart" [disabled]="added">
+        {{ added ? '✓ Added to Cart!' : 'Add to Cart' }}
+      </button>
+    </div>
+  </div>
+</div>
